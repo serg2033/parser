@@ -33,8 +33,8 @@ def get_html(url):
     proxy = {p['schema']: p['address']}
 
     r = requests.get(url, proxies=proxy, timeout=5)
-    # return r.text
-    return r.json()['origin']
+    return r.text
+    # return r.json()['origin']
 
 
 def main():
