@@ -32,8 +32,10 @@ def main():
 
             # fastest way
             for index in range(0, len(books), 100):
-                Book.insert_many(books[index:index+100]).execute()
+                Book.insert_many(books[index:index + 100]).execute()
 
 
 if __name__ == '__main__':
     main()
+
+# pg_dump -U postgres -h localhost parser > parser.sql
