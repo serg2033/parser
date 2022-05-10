@@ -3,6 +3,7 @@ import csv
 
 from bs4 import BeautifulSoup
 
+
 url = "https://books.toscrape.com/catalogue/page-1.html"
 
 
@@ -19,10 +20,20 @@ def get_page(html):
     books = soup.find("section").find("ol", class_="row").find_all("li")
     for book in books:
         title = book.find("h3").find("a").get("title")
+        # print(title)
         image = f'{"https://books.toscrape.com/"}{book.find("img").get("src")}'
+        # print(image)
         price = book.find("p", class_="price_color").text.replace("Â", "")
+        # print(price)
         status = book.find("p", class_="instock availability").text.strip()
+        # print(status)
         link = f'{"https://books.toscrape.com/catalogue/"}{book.find("h3").find("a").get("href")}'
+        # print(link)
+
+        soup2 = BeautifulSoup(get_html(link), "lxml")
+        desc = soup2.find("div", class_="sub-header").find_next().find_next().text
+
+        # print(desc)
 
         book_dict = {
             "title": title,
@@ -30,16 +41,24 @@ def get_page(html):
             "price": price,
             "status": status,
             "link": link,
+            "desc": desc,
         }
         write_to_csv(book_dict)
 
 
 def write_to_csv(data):
-    with open("data.csv", "a") as file:
+    with open("datafull.csv", "a", encoding="utf-8") as file:
         writer = csv.writer(file)
 
         writer.writerow(
-            (data["title"], data["image"], data["price"], data["status"], data["link"])
+            (
+                data["title"],
+                data["image"],
+                data["price"],
+                data["status"],
+                data["link"],
+                data["desc"],
+            )
         )
 
 
@@ -55,11 +74,13 @@ def get_next_page(html):
 
 
 def main():
+    # get_page(get_html(url))
+    # print(get_next_page(get_html(url)))
     page = 1
 
     url = "https://books.toscrape.com/catalogue/page-1.html"
     while True:
-        print(f'Parsing {page} page')
+        print(page)
         get_page(get_html(url))
 
         soup = BeautifulSoup(get_html(url), "lxml")
