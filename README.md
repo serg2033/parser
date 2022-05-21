@@ -1,3 +1,3 @@
 ## parsers
--books.toscrape.com
--zerkalo.io
+#books.toscrape.com
+#zerkalo.io
