@@ -54,7 +54,6 @@ date = sys.argv[1]
 if not os.path.exists(date):
     os.mkdir(date)
 
-
 links = get_links(make_request(f"https://news.zerkalo.io/archive/{date}.html"))
 count = 1
 for link in links:
