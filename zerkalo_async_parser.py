@@ -18,8 +18,8 @@ if not os.path.exists(date):
 
 async def get_page(session, url):
     # get data(html) from page
-    async with session.get(url) as r:
-        return await r.text()
+    async with session.get(url) as response:
+        return await response.text()
 
 
 async def get_all(session, urls):
