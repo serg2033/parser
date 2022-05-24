@@ -6,6 +6,7 @@ import re
 import os
 import sys
 import traceback
+import time
 
 
 date = sys.argv[1]
@@ -88,7 +89,11 @@ def get_links(url):
 
 
 if __name__ == "__main__":
+    start = time.perf_counter()
+
     urls = get_links(f"https://news.zerkalo.io/archive/{date}.html")
 
     results = asyncio.run(main(urls))
     parse(results)
+    print(time.perf_counter() - start)
+
